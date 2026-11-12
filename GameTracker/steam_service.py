@@ -1,9 +1,16 @@
 import os
+import sys
 from steam_web_api import Steam
 from dotenv import load_dotenv
 
 
-load_dotenv()
+if getattr(sys, 'frozen', False):
+    base = os.path.dirname(sys.executable)
+else:
+    base = os.path.dirname(os.path.abspath(__file__))
+
+dotenv_path = os.path.join(base, '.env')
+load_dotenv(dotenv_path=dotenv_path)
 
 API_KEY = os.getenv("STEAM_API_KEY")
 steam = Steam(API_KEY)
